@@ -39,3 +39,30 @@ The server has a status URL which can be used as a health check or simply as a w
 Send a GET request to: `http://[host]:[port]/status`
 
 It will return a JSON array containing the number of players in all instanced worlds on this game server.
+
+BrowserQuest Erlang Server Documentation
+========================================
+
+WIP!
+
+This is not final but the intended dependencies are:
+- Erlang R15B01
+- Yaws ver 1.92
+- rebar
+- more to come as the project takes shape...
+
+Configuration
+-------------
+
+If you know a bit of Erlang, configuration should be simple and will mirror `config_local.json` but with Erlang syntax.
+Perhaps in the near future, this project will use the original `config_local.json` file.
+
+Deployment
+----------
+
+Coming soon.
+
+Monitoring
+----------
+
+Coming soon.
