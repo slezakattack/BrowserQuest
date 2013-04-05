@@ -1,35 +1,43 @@
-%%-module(gametypes).
+-export([kinds/0, 
+        get_type/1,
+        get_kind_as_string/1, 
+        get_kind_from_string/1,
+        get_message_type_as_string/1,
+        is_mob/1
+    ]).
+%% TODO: isNpc, isItem, isArmor, isWeapon, isHealingItem, getArmorRank, getWeaponRank
+
 %% spawn_entity => SPAWN
 %% kill_entity => KILL
 %% list_entites => LIST
 -record(messages, {
-            hello = 0,
-            welcome = 1,
-            spawn_entity = 2,
-            despawn = 3,
-            move = 4,
-            lootmove = 5,
-            aggro = 6,
-            attack = 7,
-            hit = 8,
-            hurt = 9,
-            health = 10,
-            chat = 11,
-            loot = 12,
-            equip = 13,
-            drop = 14,
-            teleport = 15,
-            damage = 16,
-            population = 17,
-            kill_entity = 18,
-            list_entities = 19,
-            who = 20,
-            zone = 21,
-            destroy = 22,
-            hp = 23,
-            blink = 24,
-            open = 25,
-            check = 26}).
+            hello = {0, "hello"},
+            welcome = {1, "welcome"},
+            spawn_entity = {2, "spawn"},
+            despawn = {3, "despawn"},
+            move = {4, "move"},
+            lootmove = {5, "lootmove"},
+            aggro = {6, "aggro"},
+            attack = {7, "attack"},
+            hit = {8, "hit"},
+            hurt = {9, "hurt"},
+            health = {10, "health"},
+            chat = {11, "chat"},
+            loot = {12, "loot"},
+            equip = {13, "equip"},
+            drop = {14, "drop"},
+            teleport = {15, "teleport"},
+            damage = {16, "damage"},
+            population = {17, "population"},
+            kill_entity = {18, "kill"},
+            list_entities = {19, "list"},
+            who = {20, "who"},
+            zone = {21, "zone"},
+            destroy = {22, "destroy"},
+            hp = {23, "hp"},
+            blink = {24, "blink"},
+            open = {25, "open"},
+            check = {26, "check"}}).
 
 -record(entities, {
             warrior = 1,
@@ -81,3 +89,41 @@
             morningstar = 64,
             axe = 65,
             bluesword = 66}).
+
+-record(orientations, {
+        up = 1,
+        down = 2,
+        left = 3,
+        right = 4}).
+
+kinds() ->
+    [
+        {warrior, [#entities.warrior, "player"]},
+        {rat, [#entities.rat, "mob"]},
+        {skeleton, [#entities.skeleton, "mob"]}
+    ].
+
+get_kind_as_string(Kind) ->
+    get_kind_as_string(Kind, kinds()).
+get_kind_as_string(Kind, [{String, [Kind | Value]} | _Rest]) ->
+    {String, [Kind | Value]};
+get_kind_as_string(Kind, [_Head | Rest]) ->
+    get_kind_as_string(Kind, Rest).
+
+get_kind_from_string(String) ->
+    get_kind_from_string(String, kinds()).
+get_kind_from_string(String, [{String, [Kind | Value]} | _Rest]) ->
+    {String, [Kind | Value]};
+get_kind_from_string(String, [_Head | Rest ]) ->
+    get_kind_from_string(String, Rest).
+
+get_message_type_as_string(Type) ->
+    {_Value, String} = Type,
+    String.
+
+get_type(Kind) ->
+    {_Kind, [_Value | String]} = get_kind_as_string(Kind),
+    [Value] = String,
+    Value.
+is_mob(Kind) ->
+    get_type(Kind) =:= "mob".
