@@ -3,9 +3,13 @@
         get_kind_as_string/1, 
         get_kind_from_string/1,
         get_message_type_as_string/1,
-        is_mob/1
+        is_mob/1,
+        is_npc/1,
+        is_armor/1,
+        is_weapon/1,
+        is_object/1
     ]).
-%% TODO: isNpc, isItem, isArmor, isWeapon, isHealingItem, getArmorRank, getWeaponRank
+%% TODO: isItem, isChest, isHealingItem, getArmorRank, getWeaponRank
 
 %% spawn_entity => SPAWN
 %% kill_entity => KILL
@@ -97,10 +101,62 @@
         right = 4}).
 
 kinds() ->
+    E = #entities{},
     [
-        {warrior, [#entities.warrior, "player"]},
-        {rat, [#entities.rat, "mob"]},
-        {skeleton, [#entities.skeleton, "mob"]}
+        {warrior, [E#entities.warrior, "player"]},
+
+        {rat, [E#entities.rat, "mob"]},
+        {skeleton, [E#entities.skeleton, "mob"]},
+        {goblin, [E#entities.goblin, "mob"]},
+        {ogre, [E#entities.ogre, "mob"]},
+        {spectre, [E#entities.spectre, "mob"]},
+        {deathknight, [E#entities.deathknight, "mob"]},
+        {crab, [E#entities.crab, "mob"]},
+        {snake, [E#entities.snake, "mob"]},
+        {bat, [E#entities.bat, "mob"]},
+        {wizard, [E#entities.wizard, "mob"]},
+        {eye, [E#entities.eye, "mob"]},
+        {skeleton2, [E#entities.skeleton2, "mob"]},
+        {boss, [E#entities.boss, "mob"]},
+
+        {sword1, [E#entities.sword1, "weapon"]},
+        {sword2, [E#entities.sword2, "weapon"]},
+        {axe, [E#entities.axe, "weapon"]},
+        {redsword, [E#entities.redsword, "weapon"]},
+        {bluesword, [E#entities.bluesword, "weapon"]},
+        {goldensword, [E#entities.goldensword, "weapon"]},
+        {morningstar, [E#entities.morningstar, "weapon"]},
+
+        {firefox, [E#entities.firefox, "armor"]},
+        {clotharmor, [E#entities.clotharmor, "armor"]},
+        {leatherarmor, [E#entities.leatherarmor, "armor"]},
+        {mailarmor, [E#entities.mailarmor, "armor"]},
+        {platearmor, [E#entities.platearmor, "armor"]},
+        {redarmor, [E#entities.redarmor, "armor"]},
+        {goldenarmor, [E#entities.goldenarmor, "armor"]},
+
+        {flask, [E#entities.flask, "object"]},
+        {cake, [E#entities.cake, "object"]},
+        {burger, [E#entities.burger, "object"]},
+        {chest, [E#entities.chest, "object"]},
+        {firepotion, [E#entities.firepotion, "object"]},
+
+        {guard, [E#entities.guard, "npc"]},
+        {villagegirl, [E#entities.villagegirl, "npc"]},
+        {villager, [E#entities.villager, "npc"]},
+        {coder, [E#entities.coder, "npc"]},
+        {scientist, [E#entities.scientist, "npc"]},
+        {priest, [E#entities.priest, "npc"]},
+        {king, [E#entities.king, "npc"]},
+        {rick, [E#entities.rick, "npc"]},
+        {nyan, [E#entities.nyan, "npc"]},
+        {sorcerer, [E#entities.sorcerer, "npc"]},
+        {agent, [E#entities.agent, "npc"]},
+        {octocat, [E#entities.octocat, "npc"]},
+        {beachnpc, [E#entities.beachnpc, "npc"]},
+        {forestnpc, [E#entities.forestnpc, "npc"]},
+        {desertnpc, [E#entities.desertnpc, "npc"]},
+        {lavanpc, [E#entities.lavanpc, "npc"]}
     ].
 
 get_kind_as_string(Kind) ->
@@ -125,5 +181,18 @@ get_type(Kind) ->
     {_Kind, [_Value | String]} = get_kind_as_string(Kind),
     [Value] = String,
     Value.
+
 is_mob(Kind) ->
     get_type(Kind) =:= "mob".
+
+is_npc(Kind) ->
+    get_type(Kind) =:= "npc".
+
+is_armor(Kind) ->
+    get_type(Kind) =:= "armor".
+
+is_weapon(Kind) ->
+    get_type(Kind) =:= "weapon".
+
+is_object(Kind) ->
+    get_type(Kind) =:= "object".

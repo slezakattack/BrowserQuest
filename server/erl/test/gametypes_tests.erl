@@ -35,17 +35,58 @@ get_message_type_as_string_test_() ->
     ].
 
 get_kind_as_string_test_() ->
-    ?_assertEqual({warrior, [#entities.warrior, "player"]}, get_kind_as_string(#entities.warrior)).
+    E = #entities{},
+    ?_assertEqual({warrior, [E#entities.warrior, "player"]}, get_kind_as_string(E#entities.warrior)).
 
 get_kind_from_string_test_() ->
-    ?_assertEqual({warrior, [#entities.warrior, "player"]}, get_kind_from_string(warrior)).
+    E = #entities{},
+    ?_assertEqual({warrior, [E#entities.warrior, "player"]}, get_kind_from_string(warrior)).
 
 get_type_test_() ->
-    ?_assertEqual("player", get_type(#entities.warrior)).
+    E = #entities{},
+    ?_assertEqual("player", get_type(E#entities.warrior)).
 
 is_mob_test_() ->
+    E = #entities{},
     [
-        ?_assertEqual(true, is_mob(#entities.rat)),
-        ?_assertEqual(true, is_mob(#entities.skeleton)),
-        ?_assertEqual(false, is_mob(#entities.warrior))
+        ?_assertEqual(true, is_mob(E#entities.rat)),
+        ?_assertEqual(true, is_mob(E#entities.skeleton)),
+        ?_assertEqual(false, is_mob(E#entities.warrior))
     ].
+
+is_npc_test_() ->
+    E = #entities{},
+    [
+        ?_assertEqual(true, is_npc(E#entities.guard)),
+        ?_assertEqual(true, is_npc(E#entities.lavanpc)),
+        ?_assertEqual(false, is_npc(E#entities.warrior))
+    ].
+
+is_armor_test_() ->
+    E = #entities{},
+    [
+        ?_assertEqual(true, is_armor(E#entities.firefox)),
+        ?_assertEqual(true, is_armor(E#entities.goldenarmor)),
+        ?_assertEqual(false, is_armor(E#entities.flask))
+    ].
+
+is_weapon_test_() ->
+    E = #entities{},
+    [
+        ?_assertEqual(true, is_weapon(E#entities.sword1)),
+        ?_assertEqual(true, is_weapon(E#entities.morningstar)),
+        ?_assertEqual(false, is_weapon(E#entities.firefox))
+    ].
+
+is_object_test_() ->
+    E = #entities{},
+    [
+        ?_assertEqual(true, is_object(E#entities.flask)),
+        ?_assertEqual(true, is_object(E#entities.firepotion)),
+        ?_assertEqual(false, is_object(E#entities.guard))
+    ].
+%is_item_test_() ->
+%    E = #entities{},
+%    [
+%        ?_assertEqual(true, is_item(E#entities
+%    ].
