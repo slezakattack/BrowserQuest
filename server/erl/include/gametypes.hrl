@@ -7,9 +7,11 @@
         is_npc/1,
         is_armor/1,
         is_weapon/1,
-        is_object/1
+        is_object/1,
+        is_chest/1,
+        is_item/1
     ]).
-%% TODO: isItem, isChest, isHealingItem, getArmorRank, getWeaponRank
+%% TODO: isHealingItem, getArmorRank, getWeaponRank
 
 %% spawn_entity => SPAWN
 %% kill_entity => KILL
@@ -196,3 +198,10 @@ is_weapon(Kind) ->
 
 is_object(Kind) ->
     get_type(Kind) =:= "object".
+
+is_chest(Kind) ->
+    E = #entities{},
+    Kind =:= E#entities.chest.
+
+is_item(Kind) ->
+    is_weapon(Kind) or is_armor(Kind) or is_object(Kind) and not(is_chest(Kind)).

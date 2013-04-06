@@ -62,6 +62,13 @@ is_npc_test_() ->
         ?_assertEqual(false, is_npc(E#entities.warrior))
     ].
 
+is_chest_test_() ->
+    E = #entities{},
+    [
+        ?_assertEqual(true, is_chest(E#entities.chest)),
+        ?_assertEqual(false, is_chest(E#entities.firepotion))
+    ].
+
 is_armor_test_() ->
     E = #entities{},
     [
@@ -85,8 +92,11 @@ is_object_test_() ->
         ?_assertEqual(true, is_object(E#entities.firepotion)),
         ?_assertEqual(false, is_object(E#entities.guard))
     ].
-%is_item_test_() ->
-%    E = #entities{},
-%    [
-%        ?_assertEqual(true, is_item(E#entities
-%    ].
+is_item_test_() ->
+    E = #entities{},
+    [
+        ?_assertEqual(true, is_item(E#entities.sword1)),
+        ?_assertEqual(true, is_item(E#entities.firefox)),
+        ?_assertEqual(true, is_item(E#entities.burger)),
+        ?_assertEqual(false, is_item(E#entities.chest))
+    ].
