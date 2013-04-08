@@ -9,9 +9,11 @@
         is_weapon/1,
         is_object/1,
         is_chest/1,
-        is_item/1
+        is_item/1,
+        get_weapon_rank/1,
+        get_armor_rank/1,
+        is_healing_item/1
     ]).
-%% TODO: isHealingItem, getArmorRank, getWeaponRank
 
 %% spawn_entity => SPAWN
 %% kill_entity => KILL
@@ -124,10 +126,10 @@ kinds() ->
         {sword1, [E#entities.sword1, "weapon"]},
         {sword2, [E#entities.sword2, "weapon"]},
         {axe, [E#entities.axe, "weapon"]},
-        {redsword, [E#entities.redsword, "weapon"]},
-        {bluesword, [E#entities.bluesword, "weapon"]},
-        {goldensword, [E#entities.goldensword, "weapon"]},
         {morningstar, [E#entities.morningstar, "weapon"]},
+        {bluesword, [E#entities.bluesword, "weapon"]},
+        {redsword, [E#entities.redsword, "weapon"]},
+        {goldensword, [E#entities.goldensword, "weapon"]},
 
         {firefox, [E#entities.firefox, "armor"]},
         {clotharmor, [E#entities.clotharmor, "armor"]},
@@ -205,3 +207,23 @@ is_chest(Kind) ->
 
 is_item(Kind) ->
     is_weapon(Kind) or is_armor(Kind) or is_object(Kind) and not(is_chest(Kind)).
+
+get_weapon_rank(Kind) ->
+    Weapons = [Weapon || {_, [Weapon, "weapon"]} <- kinds()],
+    get_rank(Weapons, Kind, 0).
+
+get_armor_rank(Kind) ->
+    Armors = [Armor || {_, [Armor, "armor"]} <- kinds()],
+    get_rank(Armors, Kind, -1).
+
+get_rank([Kind | _Rest], Kind, Value) ->
+    Value;
+get_rank([_ | Rest], Kind, Value) ->
+    get_rank(Rest, Kind, Value + 1);
+get_rank([], _, _) -> -1.
+
+is_healing_item(Kind) ->
+    E = #entities{},
+    Flask = Kind =:= E#entities.flask,
+    Burger = Kind =:= E#entities.burger,
+    Flask or Burger.

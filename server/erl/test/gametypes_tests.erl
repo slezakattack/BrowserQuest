@@ -100,3 +100,29 @@ is_item_test_() ->
         ?_assertEqual(true, is_item(E#entities.burger)),
         ?_assertEqual(false, is_item(E#entities.chest))
     ].
+
+get_weapon_rank_test_() ->
+    E = #entities{},
+    [
+        ?_assertEqual(0, get_weapon_rank(E#entities.sword1)),
+        ?_assertEqual(1, get_weapon_rank(E#entities.sword2)),
+        ?_assertEqual(6, get_weapon_rank(E#entities.goldensword)),
+        ?_assertEqual(3, get_weapon_rank(E#entities.morningstar)),
+        ?_assertEqual(-1, get_weapon_rank(E#entities.rat))
+    ].
+
+get_armor_rank_test_() ->
+    E = #entities{},
+    [
+        ?_assertEqual(-1, get_armor_rank(E#entities.firefox)),
+        ?_assertEqual(0, get_armor_rank(E#entities.clotharmor)),
+        ?_assertEqual(5, get_armor_rank(E#entities.goldenarmor))
+    ].
+
+is_healing_item_test_() ->
+    E = #entities{},
+    [
+        ?_assertEqual(true, is_healing_item(E#entities.flask)),
+        ?_assertEqual(true, is_healing_item(E#entities.burger)),
+        ?_assertEqual(false, is_healing_item(E#entities.warrior))
+    ].
