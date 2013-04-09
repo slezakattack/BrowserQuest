@@ -5,4 +5,4 @@
               {applications,[kernel,stdlib]},
               {mod,{bquest_app,[]}},
               {env,[]},
-              {modules,[bquest_app,bquest_sup]}]}.
+              {modules,[bquest_app,bquest_sup,utils]}]}.
