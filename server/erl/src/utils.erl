@@ -10,7 +10,7 @@ random_range(Min, Max) ->
     (random:uniform() * (Max - Min)) + Min.
 
 random_int(Min, Max) ->
-    trunc(random_range(Min, Max)).
+    Min + trunc(random:uniform() * (Max - Min + 1)).
 
 random_orientation() ->
     R = utils:random(4),

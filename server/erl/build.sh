@@ -1,5 +1,5 @@
 #!/bin/bash
 echo "Compiling Erlang source files..."
-./rebar compile
+./rebar -v compile
 echo "Running unit tests..."
-./rebar eunit
+./rebar -v eunit
