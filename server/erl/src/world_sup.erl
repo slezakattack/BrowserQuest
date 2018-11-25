@@ -1,8 +1,8 @@
 %%%-------------------------------------------------------------------
-%% @doc bquest_sup
+%% @doc world_sup
 %% @end
 %%%-------------------------------------------------------------------
--module(bquest_sup).
+-module(world_sup).
 -behaviour(supervisor).
 
 %% API
@@ -24,22 +24,14 @@ start_link() ->
 %% Supervisor callbacks
 %%====================================================================
 init([]) ->
-    Spec = #{strategy  => one_for_one,
+    Spec = #{strategy  => simple_one_for_one,
              intensity => 10,
              period    => 1},
 
-    WorldSup    = #{id    => world_sup,
-                    start => {world_sup, start_link, []},
-                    type  => supervisor},
+    World = #{id    => world,
+              start => {world, start_link, []}},
 
-    PlayerSup   = #{id    => player_sup,
-                    start => {player_sup, start_link, []},
-                    type  => supervisor},
-
-    QuestServer = #{id    => bquest,
-                    start => {bquest, start_link, []}},
-
-    {ok, {Spec, [QuestServer, PlayerSup, WorldSup]}}.
+    {ok, {Spec, [World]}}.
 
 %%====================================================================
 %% Internal functions
