@@ -4,13 +4,13 @@
 
 %% need to find a way to test: random, random_range, random_int, random_orientation
 random(Range) when is_integer(Range) ->
-    trunc(random:uniform() * Range).
+    trunc(rand:uniform() * Range).
 
 random_range(Min, Max) ->
-    (random:uniform() * (Max - Min)) + Min.
+    (rand:uniform() * (Max - Min)) + Min.
 
 random_int(Min, Max) ->
-    Min + trunc(random:uniform() * (Max - Min + 1)).
+    Min + trunc(rand:uniform() * (Max - Min + 1)).
 
 random_orientation() ->
     R = utils:random(4),
