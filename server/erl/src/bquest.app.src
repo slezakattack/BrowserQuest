@@ -9,9 +9,10 @@
   {mod, {bquest_app, []}},
   {env, [
     {port, 8888},
-    {debug_level, "info"},
+    {debug_level, info},
     {nb_players_per_world, 200},
-    {nb_worlds, 5},
+    {nb_worlds, 1},
+    {tick_rate, 25}, %% in hertz
     {map_filepath, "./server/maps/world_server.json"},
     {metrics_enabled, false}]}
  ]}.

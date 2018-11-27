@@ -6,7 +6,7 @@ compile:
 
 .PHONY: test
 test:
-	$(REBAR) as test do compile, ct, eunit, cover
+	$(REBAR) as test do compile, ct, cover
 
 .PHONY: clean
 clean:

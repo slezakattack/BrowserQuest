@@ -24,7 +24,7 @@ start_link() ->
 %% Supervisor callbacks
 %%====================================================================
 init([]) ->
-    Spec = #{strategy  => one_for_one,
+    Spec = #{strategy  => rest_for_one,
              intensity => 10,
              period    => 1},
 
@@ -39,7 +39,7 @@ init([]) ->
     QuestServer = #{id    => bquest,
                     start => {bquest, start_link, []}},
 
-    {ok, {Spec, [QuestServer, PlayerSup, WorldSup]}}.
+    {ok, {Spec, [WorldSup, PlayerSup, QuestServer]}}.
 
 %%====================================================================
 %% Internal functions

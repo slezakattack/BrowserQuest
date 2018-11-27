@@ -29,7 +29,9 @@ start_link() ->
 %% Gen Server Callbacks
 %%===================================================================
 init([]) ->
-    create_worlds(),
+    init_server(),
+    init_worlds(),
+    init_metrics(),
     {ok, #state{}}.
 
 handle_call(_Request, _From, State) ->
@@ -50,7 +52,29 @@ code_change(_OldVsn, State, _Extra) ->
 %%===================================================================
 %% Internal functions
 %%===================================================================
-create_worlds() ->
+-spec init_worlds() -> [supervisor:startchild_ret()].
+init_worlds() ->
     {ok, PlayerMax} = application:get_env(bquest, nb_players_per_world),
     {ok, WorldNum}  = application:get_env(bquest, nb_worlds),
-    [world:create(PlayerMax) || _ <- lists:seq(1, WorldNum)].
+    [world:create(Idx, PlayerMax) || Idx <- lists:seq(1, WorldNum)].
+
+-spec init_server() -> ok.
+init_server() ->
+    {ok, Port} = application:get_env(bquest, port),
+    Dispatch = cowboy_router:compile([
+        {'_', [
+            {"/bquest_ws", bquest_listener, []}
+        ]}
+    ]),
+    SockOpts = #{port => Port},
+    {ok, _} = cowboy:start_clear(bquest, [{num_acceptors, 25}], SockOpts),
+    cowboy:set_env(bquest, dispatch, Dispatch).
+
+-spec init_metrics() -> ok.
+init_metrics() ->
+    case application:get_env(bquest, metrics_enabled) of
+        {ok, true} ->
+            ok; %% TODO: initialize metrics
+        _Else ->
+            ok
+    end.
